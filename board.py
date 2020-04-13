@@ -6,27 +6,50 @@ class TicTacToeBoard:
             4, 5, 6,
             7, 8, 9
         ]
-        self.turn = 0
-        self.p1 = 'x'
-        self.p2 = 'o'
 
-    def update_board(self, space):
-        if self.turn == 0:
-            self.state[space - 1] = self.p1
-            self.turn = 1
+    def print_board(self):
+        print(self.state[0], self.state[1], self.state[2], sep=" | ")
+        print("---------")
+        print(self.state[3], self.state[4], self.state[5], sep=" | ")
+        print("---------")
+        print(self.state[6], self.state[7], self.state[8], sep=" | ")
+
+    def update_board(self, location, token):
+        if self.valid_move(location):
+            self.state[location - 1] = token
+            return True
         else:
-            self.state[space - 1] = self.p2
-            self.turn = 0
+            return False
 
-    def check_game_end(self):
-        # check if last move won game
+    def valid_move(self, location):
+        return isinstance(self.state[location - 1], int)
 
-        # check if game spots are filled
-        for space in self.state:
-            if space is None:
+    def check_board_filled(self):
+        for location in self.state:
+            if location is isinstance(location, int):
                 return False
+        return True
 
-x = TicTacToeBoard()
+    def check_win(self):
+        if self.check_rows():
+            return True
+        if self.check_columns():
+            return True
+        if self.check_diagonals():
+            return True
 
-print(x.state)
+        return False
+
+    def __check_rows(self):
+        return (self.state[0] == self.state[1] == self.state[2]) or \
+               (self.state[3] == self.state[4] == self.state[5]) or \
+               (self.state[6] == self.state[7] == self.state[8])
+
+    def __check_columns(self):
+        return (self.state[0] == self.state[3] == self.state[6]) or \
+               (self.state[1] == self.state[4] == self.state[7]) or \
+               (self.state[2] == self.state[5] == self.state[8])
+
+    def __check_diagonals(self):
+        return (self.state[0] == self.state[4] == self.state[8]) or (self.state[2] == self.state[4] == self.state[6])
 
