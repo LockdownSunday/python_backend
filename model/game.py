@@ -47,7 +47,8 @@ class TicTacToe:
         return Player(name, token)
 
     def __prompt_move(self):
-        return input("Where do you want to place your token?")
+        name = self.__get_current_player().name
+        return input(f"{name}, where do you want to place your token?")
 
     def __switch_player(self):
         self.current_player_index = (self.current_player_index + 1) % len(self.players)
@@ -61,6 +62,6 @@ class TicTacToe:
 # starter code
 game = TicTacToe()
 game.start()
-print(game.players[0].name, game.players[0].token)
-print(game.players[1].name, game.players[1].token)
-print(game.current_player_index)
+print("Player1: ", game.players[0].name, game.players[0].token)
+print("Player2: ", game.players[1].name, game.players[1].token)
+print("Next player name: ", game.players[game.current_player_index].name)
